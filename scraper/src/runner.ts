@@ -2,14 +2,13 @@ import * as cheerio from 'cheerio';
 import parser from "cron-parser"
 import  Axios  from 'axios';
 import fs from "fs";
-
-//const { data } = await Axios.get("https://old.reddit.com/r/nfl");
+import { save } from "./lib/db";
 
 let script = `
 
     const { data } = await Axios.get("https://old.reddit.com/r/nfl");
 
-    console.log(data);
+    save(data);
 `;
 
 let scriptWrapper = `
