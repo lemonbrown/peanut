@@ -17,7 +17,7 @@ let saveData = [];
 
 topPlayers.each( (idx, ele) => saveData.push( { name: $(ele).text().trim()}));
 
-console.log("ASDF") 
+console.log(saveData) 
 
         })();
 

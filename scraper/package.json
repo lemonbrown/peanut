@@ -1,17 +1,25 @@
 {
+  "name": "ilsrun",
+  "version": "0.0.1",
+  "bin": {
+    "ilsrun": "./dist/runner.js"
+  },
   "dependencies": {
+    "@types/node": "^20.4.2",
     "axios": "^1.4.0",
     "cheerio": "^1.0.0-rc.12",
     "cron-parser": "^4.8.1",
+    "crypto": "^1.0.1",
+    "esbuild": "^0.18.13",
     "fs": "^0.0.1-security",
+    "path": "^0.12.7",
     "pocketbase": "^0.15.2",
-    "puppeteer": "^20.7.4"
+    "puppeteer": "^20.7.4",
+    "tmp": "^0.2.1"
   },
-  "devDependencies": {
-    "ts-node": "^10.9.1",
-    "typescript": "^5.1.6"
-  },
+  "devDependencies": {},
   "scripts": {
-    "start": "ts-node ./src/runner.ts"
+    "start": "ts-node ./src/runner.ts",
+    "build": "tsc --noEmit ./src/runner.ts && esbuild src/runner.ts --bundle --platform=node --format=cjs --outfile=dist/runner.js"
   }
 }

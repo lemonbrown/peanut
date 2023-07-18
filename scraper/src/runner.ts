@@ -1,15 +1,19 @@
+#!/usr/bin/env node
 import * as cheerio from 'cheerio';
-import parser from "cron-parser"
+import * as parser from "cron-parser"
 import  Axios  from 'axios';
-import fs from "fs";
+import * as fs from "fs";
 import { save } from "./lib/db";
+import { tmpdir } from 'os';
+import * as process from "process"
 
-let script = `
+var args = process.argv.length > 2 ? process.argv.splice(0) : ["../test/topPlayersScrape.js"];
 
-    const { data } = await Axios.get("https://old.reddit.com/r/nfl");
+let fileToRunName = args[0];
 
-    save(data);
-`;
+let basePath = process.cwd()
+
+let script = fs.readFileSync(fileToRunName).toString();
 
 let scriptWrapper = `
 
@@ -36,18 +40,20 @@ let scriptWrapper = `
 //run
 (async () => {
 
-    let filename = "temp.js";
+    let tempFileName = "temp.js"; 
 
     try{
 
-        fs.writeFileSync(filename, scriptWrapper);
+        fs.writeFileSync(tempFileName, scriptWrapper);
     }
     catch(err){
         
         console.log(err)
     }
+
+    console.log(basePath)
     
-    let { runThis } = await import("../" + filename);
+    let { runThis } = await import( basePath + "\/" + tempFileName);
 
     runThis();
 
